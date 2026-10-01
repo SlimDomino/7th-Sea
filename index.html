@@ -33,6 +33,8 @@
 <ul id="texts"></ul>
 <h2 id="pdfs-h">PDFs</h2>
 <ul id="pdfs"></ul>
+<h2 id="docs-h">Documents</h2>
+<ul id="docs"></ul>
 <dialog id="viewer"><button onclick="viewer.close()" aria-label="Close">✕</button><div id="content"></div></dialog>
 <script>
 const $ = id => document.getElementById(id);
@@ -41,7 +43,7 @@ const name = f => f.replace(/\.[^.]+$/, '');
 function show(node) { $('content').replaceChildren(node); $('viewer').showModal(); }
 $('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
-fetch('files.json').then(r => r.json()).then(({ images, texts, pdfs = [] }) => {
+fetch('files.json').then(r => r.json()).then(({ images, texts, pdfs = [], docs = [] }) => {
   for (const f of images) {
     const a = document.createElement('a');
     a.href = url('images', f);
@@ -67,7 +69,12 @@ fetch('files.json').then(r => r.json()).then(({ images, texts, pdfs = [] }) => {
     a.href = url('pdfs', f); a.textContent = f; a.target = '_blank'; a.rel = 'noopener';
     li.append(a); $('pdfs').append(li);
   }
-  for (const [list, heading] of [['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h']])
+  for (const f of docs) {
+    const li = document.createElement('li'), a = document.createElement('a');
+    a.href = f.split('/').map(encodeURIComponent).join('/'); a.textContent = f.split('/').pop(); a.download = '';
+    li.append(a); $('docs').append(li);
+  }
+  for (const [list, heading] of [['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h'], ['docs', 'docs-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
 </script>
