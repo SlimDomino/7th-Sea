@@ -1,0 +1,23 @@
+# Rebuilds files.json whenever pictures, text files or PDFs are added or removed.
+name: Update file list
+on:
+  push:
+    branches: [main]
+    paths: ['images/**', 'texts/**', 'pdfs/**', 'build.js']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node build.js
+      - name: Commit files.json if it changed
+        run: |
+          if ! git diff --quiet files.json; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@users.noreply.github.com"
+            git add files.json
+            git commit -m "Update files.json"
+            git push
+          fi
