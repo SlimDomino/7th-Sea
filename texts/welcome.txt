@@ -1,4 +1,0 @@
-Welcome to the 7th Sea gallery.
-
-Drop pictures into images/ and text files into texts/,
-run `node build.js`, then commit and push.
