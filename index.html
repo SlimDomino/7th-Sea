@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7th Sea Gallery</title>
+<style>
+  :root { --bg:#fff; --fg:#1a1a1a; --muted:#666; --card:#f3f3f3; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#16181d; --fg:#e8e8e8; --muted:#999; --card:#23262d; } }
+  body { margin:0; padding:16px; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, sans-serif; max-width:1100px; margin-inline:auto; }
+  h1 { margin:0 0 4px; } h2 { margin-top:32px; }
+  p.sub { color:var(--muted); margin-top:0; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; }
+  .grid a { background:var(--card); border-radius:8px; overflow:hidden; text-decoration:none; color:inherit; }
+  .grid img { width:100%; height:180px; object-fit:cover; display:block; }
+  .grid span { display:block; padding:6px 8px; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  ul { padding-left:20px; } a { color:inherit; }
+  dialog { border:0; padding:0; background:var(--bg); color:var(--fg); max-width:90vw; max-height:90vh; border-radius:8px; }
+  dialog::backdrop { background:rgba(0,0,0,.7); }
+  dialog img { max-width:90vw; max-height:85vh; display:block; }
+  dialog pre { margin:0; padding:16px; white-space:pre-wrap; max-width:80ch; max-height:80vh; overflow:auto; }
+  dialog button { position:absolute; top:6px; right:6px; }
+</style>
+</head>
+<body>
+<h1>7th Sea Gallery</h1>
+<p class="sub">Pictures and notes.</p>
+<h2>Pictures</h2>
+<div class="grid" id="images"></div>
+<h2>Text files</h2>
+<ul id="texts"></ul>
+<dialog id="viewer"><button onclick="viewer.close()" aria-label="Close">✕</button><div id="content"></div></dialog>
+<script>
+const $ = id => document.getElementById(id);
+const url = (dir, f) => dir + '/' + encodeURIComponent(f);
+const name = f => f.replace(/\.[^.]+$/, '');
+function show(node) { $('content').replaceChildren(node); $('viewer').showModal(); }
+$('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+fetch('files.json').then(r => r.json()).then(({ images, texts }) => {
+  for (const f of images) {
+    const a = document.createElement('a');
+    a.href = url('images', f);
+    a.innerHTML = '<img loading="lazy"><span></span>';
+    a.firstChild.src = a.href; a.firstChild.alt = name(f);
+    a.lastChild.textContent = name(f);
+    a.onclick = e => { e.preventDefault(); const i = new Image(); i.src = a.href; i.alt = name(f); show(i); };
+    $('images').append(a);
+  }
+  for (const f of texts) {
+    const li = document.createElement('li'), a = document.createElement('a');
+    a.href = url('texts', f); a.textContent = f;
+    a.onclick = async e => {
+      e.preventDefault();
+      const pre = document.createElement('pre');
+      pre.textContent = await (await fetch(a.href)).text();
+      show(pre);
+    };
+    li.append(a); $('texts').append(li);
+  }
+}).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
+</script>
+</body>
+</html>
