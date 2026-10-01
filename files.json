@@ -18,7 +18,9 @@
     "Seventh Sea.png",
     "Tomas.png"
   ],
-  "texts": [],
+  "texts": [
+    "7th Sea 20 Q.txt"
+  ],
   "pdfs": [
     "Hacienda de los Robles.pdf"
   ]
