@@ -27,10 +27,12 @@
 <body>
 <h1>7th Sea Gallery</h1>
 <p class="sub">Pictures and notes.</p>
-<h2>Pictures</h2>
+<h2 id="images-h">Pictures</h2>
 <div class="grid" id="images"></div>
-<h2>Text files</h2>
+<h2 id="texts-h">Text files</h2>
 <ul id="texts"></ul>
+<h2 id="pdfs-h">PDFs</h2>
+<ul id="pdfs"></ul>
 <dialog id="viewer"><button onclick="viewer.close()" aria-label="Close">✕</button><div id="content"></div></dialog>
 <script>
 const $ = id => document.getElementById(id);
@@ -39,7 +41,7 @@ const name = f => f.replace(/\.[^.]+$/, '');
 function show(node) { $('content').replaceChildren(node); $('viewer').showModal(); }
 $('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
-fetch('files.json').then(r => r.json()).then(({ images, texts }) => {
+fetch('files.json').then(r => r.json()).then(({ images, texts, pdfs = [] }) => {
   for (const f of images) {
     const a = document.createElement('a');
     a.href = url('images', f);
@@ -60,6 +62,13 @@ fetch('files.json').then(r => r.json()).then(({ images, texts }) => {
     };
     li.append(a); $('texts').append(li);
   }
+  for (const f of pdfs) {
+    const li = document.createElement('li'), a = document.createElement('a');
+    a.href = url('pdfs', f); a.textContent = f; a.target = '_blank'; a.rel = 'noopener';
+    li.append(a); $('pdfs').append(li);
+  }
+  for (const [list, heading] of [['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h']])
+    if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
 </script>
 </body>
