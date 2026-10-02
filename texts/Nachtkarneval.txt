@@ -1,0 +1,24 @@
+
+Ship: Nachtkarneval
+Type: Fluyt (30-point ship)
+
+14 guns, 7 per side
+
+Traits
+Brawn 2, Finesse 2, Resolve 5, Wits 6, Panache 7
+Modifications
+
+Lucky (DR 3) — +1 Drama die
+Smuggling Compartments (DR 3) — up to 1 Cargo hidden from all but the most thorough search
+Hidden Towline (DR 1) — concealed rope beneath the hull for hauling contraband; Draft +1
+
+Flaws
+
+Brittle Hull (2 pts) — no exploding dice on Wound Checks
+
+Derived Stats
+Draft: 6 (5 base +1 from Hidden Towline)
+Crew: 2
+Cargo: 5
+
+Diego Garcia - Carpenter
