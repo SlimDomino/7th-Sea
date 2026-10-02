@@ -44,7 +44,7 @@ const name = f => f.replace(/\.[^.]+$/, '');
 function show(node) { $('content').replaceChildren(node); $('viewer').showModal(); }
 $('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
-fetch('files.json').then(r => r.json()).then(({ images, texts, pdfs = [], docs = [] }) => {
+fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, texts, pdfs = [], docs = [] }) => {
   for (const f of images) {
     const a = document.createElement('a');
     a.href = url('images', f);
