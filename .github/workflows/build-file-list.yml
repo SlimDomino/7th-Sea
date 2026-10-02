@@ -3,7 +3,7 @@ name: Update file list
 on:
   push:
     branches: [main]
-    paths: ['images/**', 'texts/**', 'pdfs/**', 'build.js']
+    paths: ['images/**', 'texts/**', 'pdfs/**', 'documents/**', 'build.js']
 permissions:
   contents: write
 jobs:
