@@ -74,13 +74,13 @@ They're passing under the gangway when the pistols go off from behind the crates
 
 Rafi moves first. He stands up in the saddle, leaps for the gangway, catches it and flips himself up onto the planks. He draws a pistol and fires down into the men who still have loaded guns: three brutes drop to one shot (grapeshot, the table decided). Then he somersaults off the gangway onto the crates beside the nearest squad and comes down swinging from above them, taking out four more. That's a squad gone.
 
-That's when they see the jewel. A henchman climbs onto a double stack of crates, and something glows red at his throat. He shoots Rafi (15 more) and misses Lute. The brutes close in four to a man. Rafi dodges one blade and takes the rest: 33 Flesh Wounds, a failed Wound Check, and two Dramatic Wounds. Lute shrugs off 24 and goes to work with the Panzerhand, poking eyes, raking claws and ripping through all four men in front of him. By the end of the round the two of them have put down twelve of the thirty-two.
+That's when they see the jewel. The ambush's leader climbs onto a double stack of crates, and something glows red at his throat. He shoots Rafi (15 more) and misses Lute. The brutes close in four to a man. Rafi dodges one blade and takes the rest: 33 Flesh Wounds, a failed Wound Check, and two Dramatic Wounds. Lute shrugs off 24 and goes to work with the Panzerhand, poking eyes, raking claws and ripping through all four men in front of him. By the end of the round the two of them have put down twelve of the thirty-two.
 
-The man with the jewel leaps down off the crates, stabs Lute and snatches up "Rodrigo," throws Inés over his shoulder and runs.
+Then the leader, the man with the jewel, leaps down off the crates, stabs Lute, snatches up "Rodrigo," throws Inés over his shoulder and runs.
 
-Rafi has first action in the next round. "Unhand my seamstress!" At long range he puts a pistol ball into the running man's leg, nearly at the knee, and the man goes down hard with two Dramatic Wounds. Rafi closes in and cuts him again for good measure. The henchman starts to crawl away, bleeding. The other henchman goes for Lute and lands a hit that tips him past his limit: three Dramatic Wounds, one for each point of Resolve, and no more exploding dice. With both their leaders down, an entire squad of eight melts back into the dark.
+Rafi has first action in the next round. "Unhand my seamstress!" At long range he puts a pistol ball into the leader's lower leg and shatters it, and the man goes down hard with two Dramatic Wounds. Rafi closes in and cuts him again for good measure. The leader starts to crawl away, bleeding. The second henchman, the one who was supposed to grab the seamstress, goes for Lute and lands a hit that tips him past his limit: three Dramatic Wounds, one for each point of Resolve, and no more exploding dice. With the leader down, an entire squad of eight melts back into the dark.
 
-Lute scoops up Inés and starts for the docks, shouting for his ship the whole way. Then he remembers the red jewel, still around the neck of the man crawling away. He drops the seamstress, turns back, and rakes the Panzerhand across the crawling man's skull until his claws catch the chain, then tears it free. One more blow leaves the man two wounds from death and out of the fight. Rafi trades sword cuts with the second henchman, who is still on his feet.
+Lute scoops up Inés and starts for the docks, shouting for his ship the whole way. Then he remembers the red jewel, still around the neck of the man crawling away. He drops the seamstress, turns back, and rakes the Panzerhand across the crawling man's skull until his claws catch the chain, then tears it free. One more blow leaves the man two wounds from death and out of the fight. Rafi's blade gives the second henchman a Dramatic Wound, but he stays on his feet.
 
 
 ## Meanwhile, at the Ship
@@ -93,12 +93,12 @@ On the way she passes a very odd-looking ship with red-and-white striped sails a
 
 "Señor, your Captain Lute is in trouble. There are a dozen men against him." Gomez holds up a hand, points at the sailors already on the gangplank and sends them, and six more grab cutlasses and pistols and follow her at a run.
 
-They come in from the dockside, behind the fight. Eight pistols go off at once, and the last of the brutes go down.
+They come in from the dockside, behind the fight. Eight pistols go off at once, more brutes go down, and the rest break and scatter. Without María José, Rafi and Lute would very likely have died in that street.
 
 
 ## Where We Left It
 
-The street is full of smoke and bodies. Rafi and Lute are standing, but barely: two Dramatic Wounds for Rafi and three for Lute. Lute's crew is spilling into the street. Inés is alive and still free. One henchman is wounded and the other lies at Lute's feet, ankles shattered and scalp torn, inches from death. And Lute's iron fist is closed around a blood-red jewel that glows.
+The street is full of smoke and bodies. Rafi and Lute are standing, but barely: two Dramatic Wounds for Rafi and three for Lute. Lute's crew is spilling into the street. Inés is alive and still free. Both henchmen are alive. The leader lies at Lute's feet with his lower leg shattered and his scalp torn, inches from death. The second henchman, the one meant to grab the seamstress, is carrying a Dramatic Wound. A dozen or so brutes either ran or were left alive. And Lute's iron fist is closed around a blood-red jewel that glows.
 
 We stopped mid-scene.
 
@@ -107,9 +107,9 @@ We stopped mid-scene.
 
 - **The jewel.** Lute tore a glowing red stone off a henchman's neck. What is it, and why was an Inquisition officer wearing it?
 - **Fidel's notebook.** It has an Eisen sailor with an iron hand in it, a Castillian sailor with him, and a drunk cousin named "Rodrigo." The young clerk also tore out a page and sent a boy running into the city right before the ambush. María José saw it.
-- **Two henchmen down, alive.** One is wounded and one is dying, and both are still in the street. What happens to them, and what do they know?
+- **Two henchmen, both alive.** The leader is near death with a shattered leg, and the second henchman has a Dramatic Wound. What happens to them, and what do they know?
 - **Inés.** She knows Old Pico's drop, two safehouses and that Las Robles shelters people. She can't stay in Altamira now. Can she get aboard before the tide?
 - **The fugitive.** She's aboard Captain Ocaña's ship. Does the ship make the night tide with everything that's going on at the docks?
-- **The ones who got away.** A whole squad of eight slipped off into the dark, and they saw Rafi and Lute's faces.
+- **Salazar has faces now.** A dozen or so brutes ran or survived. Between them and the notebook, Salazar now has descriptions of both Lute and Rafi.
 - **The wounds.** Rafi and Lute are both badly hurt, and Lute has no exploding dice left until he heals.
 - **Gomez and the crew.** Lute's crew now knows its captain is mixed up in something with the Inquisition.
