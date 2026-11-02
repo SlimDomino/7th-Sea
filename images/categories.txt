@@ -14,7 +14,6 @@
 [Torres y Soldano Family]
 Emilio Torres.jpg = Don Emilio Torres
 Isabel Soldano y Torres.jpeg = Doña Isabel Soldano de Torres
-Isabel Soldano y Torres.jpg = Doña Isabel Soldano de Torres (2)
 Emilito.jfif = Emilito
 Juan.jpg = Juan
 Hern.png = Hernando
