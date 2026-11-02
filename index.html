@@ -30,16 +30,9 @@
   .hub .label { position:absolute; left:0; right:0; bottom:0; padding:10px 8px; background:rgba(40,8,8,.78); }
   .hub .pics { background:url("images/7th-sea-map-combined.gif") center / cover; }
   .hub .files { background:url("assets/emilios-study.jpeg") center 35% / cover; }
-  .hub .files { text-align:left; }
   .hub .label { text-align:center; }
-  .hub .peek { position:absolute; top:10px; left:10px; right:10px; list-style:none; margin:0; padding:8px 12px; border-radius:8px; background:rgba(28,14,6,.72); font:14px/1.45 system-ui, sans-serif; color:#fbeed0; }
-  .hub .peek li { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .hub .peek li::before { content:''; display:inline-block; width:11px; height:13px; margin-right:7px; vertical-align:-1px; border-radius:2px;
-    background:linear-gradient(135deg,#fbeed0 0 70%, #d9b56a 70%); }
-  .hub .peek li.more { color:#e6cf9a; font-style:italic; }
-  .hub .peek li.more::before { display:none; }
   .hub .label svg { width:22px; height:22px; vertical-align:-4px; margin-right:6px; }
-  @media (max-width:600px) { .hub { grid-template-columns:1fr 1fr; gap:10px; } .hub button { height:130px; font-size:17px; } .hub .peek { font-size:12px; top:7px; left:7px; right:7px; padding:6px 8px; line-height:1.4; } }
+  @media (max-width:600px) { .hub { grid-template-columns:1fr 1fr; gap:10px; } .hub button { height:130px; font-size:17px; } }
   section.panel { margin-top:10px; }
   .filelist { list-style:none; padding:0; max-width:560px; margin:0 auto; background:var(--card); border:1px solid #d8c9a8; border-radius:10px; overflow:hidden; }
   .filelist li + li { border-top:1px solid #e6dcc4; }
@@ -114,7 +107,6 @@
 <nav class="hub" aria-label="Sections">
   <button type="button" class="pics" data-panel="pictures" aria-pressed="false"><span class="label">Pictures &amp; Maps</span></button>
   <button type="button" class="files" data-panel="files" aria-pressed="false">
-    <ul class="peek" id="peek" aria-hidden="true"></ul>
     <span class="label"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 14a4 4 0 0 1 4-4h14l6 6h24a4 4 0 0 1 4 4v4H6z" fill="#e0b85a"/><path d="M4 24h56l-4 28a4 4 0 0 1-4 3H10a4 4 0 0 1-4-3z" fill="#f2cf73"/></svg>All Files</span></button>
 </nav>
 <section class="panel" id="pictures" hidden>
@@ -300,24 +292,6 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     else a.download = '';
     li.append(a); $('filelist').append(li);
   }
-  // Preview list on the All Files button: as many file names as fit, then "+ N more".
-  const allFiles = fileEntries.map(e => e.title);
-  const fitPeek = () => {
-    const ul = $('peek'), room = ul.parentElement.clientHeight - ul.parentElement.querySelector('.label').offsetHeight - 20;
-    ul.replaceChildren();
-    for (let i = 0; i < allFiles.length; i++) {
-      const li = document.createElement('li'); li.textContent = allFiles[i]; ul.append(li);
-      if (ul.offsetHeight > room) {
-        li.remove();
-        if (ul.lastChild) ul.lastChild.remove();
-        const more = document.createElement('li'); more.className = 'more';
-        more.textContent = '+ ' + (allFiles.length - ul.children.length) + ' more'; ul.append(more);
-        break;
-      }
-    }
-  };
-  fitPeek(); addEventListener('resize', fitPeek);
-  document.fonts.ready.then(fitPeek);
   for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['filelist', 'files-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
