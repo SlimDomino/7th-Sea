@@ -2,11 +2,11 @@
   "categories": [
     "Torres y Soldano Family",
     "Player Characters",
+    "NachtKarneval Crew",
     "Other NPCs",
     "Places & Maps",
     "Battle Maps & Scenes",
-    "Items & Artifacts",
-    "Other"
+    "Items & Artifacts"
   ],
   "images": [
     {
@@ -75,6 +75,11 @@
       "category": "Player Characters"
     },
     {
+      "src": "images/Seventh Sea.png",
+      "title": "Seventh Sea",
+      "category": "NachtKarneval Crew"
+    },
+    {
       "src": "images/Defender of the Faith.png",
       "title": "Defender of the Faith",
       "category": "Other NPCs"
@@ -113,11 +118,6 @@
       "src": "images/Jewel of Judgement.jpeg",
       "title": "Jewel of Judgement",
       "category": "Items & Artifacts"
-    },
-    {
-      "src": "images/Seventh Sea.png",
-      "title": "Seventh Sea",
-      "category": "Other"
     }
   ],
   "texts": [
