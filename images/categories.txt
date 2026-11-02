@@ -28,6 +28,9 @@ Maria Jose.jpg = María José
 Maria Jose party dress.png = María José (party dress)
 Lute's party dress.png = Captain Lute (party dress)
 
+[NachtKarneval Crew]
+Seventh Sea.png = Seventh Sea
+
 [Other NPCs]
 Defender of the Faith.png = Defender of the Faith
 Red Cap.png = Red Cap
@@ -43,5 +46,3 @@ Dockside.jpeg = Dockside Warehouse
 
 [Items & Artifacts]
 Jewel of Judgement.jpeg = Jewel of Judgement
-
-# Not sorted yet (shows under Other): Seventh Sea.png
