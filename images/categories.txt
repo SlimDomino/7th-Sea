@@ -38,6 +38,7 @@ Captain Pickles.png = Captain Pickles, Master Gunner
 The Padre.jpeg = Padre Bart, Chaplain
 Seventh Sea.png = Seventh Sea
 Gomez.png = Gomez
+Esme.jpeg = Esme Eriksdottir
 
 [Other NPCs]
 Defender of the Faith.png = Defender of the Faith
