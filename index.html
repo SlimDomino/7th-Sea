@@ -31,6 +31,7 @@
   .hub .pics { background:url("images/7th-sea-map-combined.gif") center / cover; }
   .hub .files { background:url("assets/emilios-study.jpeg") center 35% / cover; }
   .hub .files { text-align:left; }
+  .hub .label { text-align:center; }
   .hub .peek { position:absolute; top:10px; left:10px; right:10px; list-style:none; margin:0; padding:8px 12px; border-radius:8px; background:rgba(28,14,6,.72); font:14px/1.45 system-ui, sans-serif; color:#fbeed0; }
   .hub .peek li { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .hub .peek li::before { content:''; display:inline-block; width:11px; height:13px; margin-right:7px; vertical-align:-1px; border-radius:2px;
@@ -40,6 +41,11 @@
   .hub .label svg { width:22px; height:22px; vertical-align:-4px; margin-right:6px; }
   @media (max-width:600px) { .hub { grid-template-columns:1fr 1fr; gap:10px; } .hub button { height:130px; font-size:17px; } .hub .peek { font-size:12px; top:7px; left:7px; right:7px; padding:6px 8px; line-height:1.4; } }
   section.panel { margin-top:10px; }
+  .filelist { list-style:none; padding:0; max-width:560px; margin:0 auto; background:var(--card); border:1px solid #d8c9a8; border-radius:10px; overflow:hidden; }
+  .filelist li + li { border-top:1px solid #e6dcc4; }
+  .filelist a { display:block; padding:11px 16px; text-decoration:none; font-size:16px; }
+  .filelist a:hover { background:#7a1f1f; color:#fff; }
+  #files-h { text-align:center; }
   h2#recaps-h { text-align:center; }
   :root { --bg:#fff; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); }
   @media (prefers-color-scheme: dark) { :root { --bg:#16181d; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); } }
@@ -117,12 +123,8 @@
 <div class="grid" id="images"></div>
 </section>
 <section class="panel" id="files" hidden>
-<h2 id="texts-h">Text files</h2>
-<ul id="texts"></ul>
-<h2 id="pdfs-h">PDFs</h2>
-<ul id="pdfs"></ul>
-<h2 id="docs-h">Documents</h2>
-<ul id="docs"></ul>
+<h2 id="files-h">All Files</h2>
+<ul class="filelist" id="filelist"></ul>
 </section>
 <dialog id="viewer"><button onclick="viewer.close()" aria-label="Close">✕</button><div id="content"></div></dialog>
 <script>
@@ -281,25 +283,25 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     b.title = r.f; b.onclick = () => openRecap(url('texts', r.f));
     $('recaps').append(b);
   }
-  for (const f of texts.filter(f => !SESSION.test(f))) {
+  // All Files: one A-to-Z list of every text file, PDF and document (not the recaps),
+  // shown without the .txt/.pdf ending. Text files open in the viewer, PDFs in a new
+  // tab, Word-type documents download.
+  const fileEntries = [
+    ...texts.filter(f => !SESSION.test(f)).map(f => ({ name: f, href: url('texts', f), kind: 'text' })),
+    ...pdfs.map(f => ({ name: f, href: url('pdfs', f), kind: 'pdf' })),
+    ...docs.map(f => ({ name: f.split('/').pop(), href: f.split('/').map(encodeURIComponent).join('/'), kind: 'doc' })),
+  ].map(e => ({ ...e, title: e.name.replace(/\.[^.]+$/, '') }))
+   .sort((a, b) => a.title.localeCompare(b.title, undefined, { numeric: true, sensitivity: 'base' }));
+  for (const e of fileEntries) {
     const li = document.createElement('li'), a = document.createElement('a');
-    a.href = url('texts', f); a.textContent = f;
-    a.onclick = e => { e.preventDefault(); openText(a.href); };
-    li.append(a); $('texts').append(li);
-  }
-  for (const f of pdfs) {
-    const li = document.createElement('li'), a = document.createElement('a');
-    a.href = url('pdfs', f); a.textContent = f; a.target = '_blank'; a.rel = 'noopener';
-    li.append(a); $('pdfs').append(li);
-  }
-  for (const f of docs) {
-    const li = document.createElement('li'), a = document.createElement('a');
-    a.href = f.split('/').map(encodeURIComponent).join('/'); a.textContent = f.split('/').pop(); a.download = '';
-    li.append(a); $('docs').append(li);
+    a.href = e.href; a.textContent = e.title; a.title = e.name;
+    if (e.kind === 'text') a.onclick = ev => { ev.preventDefault(); openText(a.href); };
+    else if (e.kind === 'pdf') { a.target = '_blank'; a.rel = 'noopener'; }
+    else a.download = '';
+    li.append(a); $('filelist').append(li);
   }
   // Preview list on the All Files button: as many file names as fit, then "+ N more".
-  const allFiles = [...texts.filter(f => !SESSION.test(f)), ...pdfs, ...docs.map(f => f.split('/').pop())]
-    .map(f => f.replace(/\.[^.]+$/, ''));
+  const allFiles = fileEntries.map(e => e.title);
   const fitPeek = () => {
     const ul = $('peek'), room = ul.parentElement.clientHeight - ul.parentElement.querySelector('.label').offsetHeight - 20;
     ul.replaceChildren();
@@ -316,7 +318,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
   };
   fitPeek(); addEventListener('resize', fitPeek);
   document.fonts.ready.then(fitPeek);
-  for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h'], ['docs', 'docs-h']])
+  for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['filelist', 'files-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
 </script>
