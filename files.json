@@ -85,8 +85,38 @@
       "category": "Player Characters"
     },
     {
+      "src": "images/Nachtkarneval.jpg",
+      "title": "The NachtKarneval",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/3 Quarter Mate Rodney.png",
+      "title": "Rodney, Three Quarter Mate",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Half Mate Benoit Balls.jfif",
+      "title": "Benoît du Charmont, Half Mate",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Captain Pickles.png",
+      "title": "Captain Pickles, Master Gunner",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/The Padre.jpeg",
+      "title": "Padre Bart, Chaplain",
+      "category": "NachtKarneval Crew"
+    },
+    {
       "src": "images/Seventh Sea.png",
       "title": "Seventh Sea",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Gomez.png",
+      "title": "Gomez",
       "category": "NachtKarneval Crew"
     },
     {
