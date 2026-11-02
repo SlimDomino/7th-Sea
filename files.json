@@ -55,6 +55,11 @@
       "category": "Torres y Soldano Family"
     },
     {
+      "src": "images/Lute's party dress.png",
+      "title": "Captain Lute (party dress)",
+      "category": "Player Characters"
+    },
+    {
       "src": "images/Maria Jose.jpg",
       "title": "María José",
       "category": "Player Characters"
@@ -62,11 +67,6 @@
     {
       "src": "images/Maria Jose party dress.png",
       "title": "María José (party dress)",
-      "category": "Player Characters"
-    },
-    {
-      "src": "images/Lute's party dress.png",
-      "title": "Captain Lute (party dress)",
       "category": "Player Characters"
     },
     {
