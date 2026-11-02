@@ -17,6 +17,12 @@
   .grid a { background:var(--card); border-radius:8px; overflow:hidden; text-decoration:none; color:inherit; }
   .grid img { width:100%; height:180px; object-fit:cover; display:block; }
   .grid span { display:block; padding:6px 8px; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .filters { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
+  .filters button { font:inherit; font-size:14px; padding:6px 14px; border-radius:999px; border:1px solid #8a6d3b; background:var(--card); color:var(--fg); cursor:pointer; }
+  .filters button:hover { background:#fff; }
+  .filters button[aria-pressed="true"] { background:#7a1f1f; border-color:#7a1f1f; color:#fff; }
+  .filters button small { opacity:.7; margin-left:4px; }
+  .grid a[hidden] { display:none; }
   ul { padding-left:20px; } a { color:inherit; }
   dialog { border:0; padding:0; background:#fff; color:var(--fg); max-width:90vw; max-height:90vh; border-radius:8px; }
   dialog::backdrop { background:rgba(0,0,0,.7); }
@@ -29,6 +35,7 @@
 <h1>Blood & Iron</h1>
 <p class="sub">Real People Gaming presents 7th Sea</p>
 <h2 id="images-h">Pictures</h2>
+<div class="filters" id="filters" role="group" aria-label="Picture categories"></div>
 <div class="grid" id="images"></div>
 <h2 id="texts-h">Text files</h2>
 <ul id="texts"></ul>
@@ -44,15 +51,36 @@ const name = f => f.replace(/\.[^.]+$/, '');
 function show(node) { $('content').replaceChildren(node); $('viewer').showModal(); }
 $('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
-fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, texts, pdfs = [], docs = [] }) => {
-  for (const f of images) {
+fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, categories, texts, pdfs = [], docs = [] }) => {
+  // Older files.json lists plain file names; treat those as uncategorized.
+  images = images.map(f => typeof f === 'string' ? { src: url('images', f), title: name(f), category: 'Other' } : { ...f, src: f.src.split('/').map(encodeURIComponent).join('/') });
+  categories = categories || [...new Set(images.map(i => i.category))];
+  for (const img of images) {
     const a = document.createElement('a');
-    a.href = url('images', f);
+    a.href = img.src; a.dataset.category = img.category;
     a.innerHTML = '<img loading="lazy"><span></span>';
-    a.firstChild.src = a.href; a.firstChild.alt = name(f);
-    a.lastChild.textContent = name(f);
-    a.onclick = e => { e.preventDefault(); const i = new Image(); i.src = a.href; i.alt = name(f); show(i); };
+    a.firstChild.src = a.href; a.firstChild.alt = img.title;
+    a.lastChild.textContent = img.title; a.title = img.title + ' (' + img.category + ')';
+    a.onclick = e => { e.preventDefault(); const i = new Image(); i.src = a.href; i.alt = img.title; show(i); };
     $('images').append(a);
+  }
+  // Filter buttons: "All" plus one per category. The choice is kept in the address (#Places & Maps) so it can be linked.
+  const pick = cat => {
+    for (const b of $('filters').children) b.setAttribute('aria-pressed', b.dataset.category === cat);
+    for (const a of $('images').children) a.hidden = cat !== 'All' && a.dataset.category !== cat;
+    history.replaceState(null, '', cat === 'All' ? location.pathname + location.search : '#' + encodeURIComponent(cat));
+  };
+  if (categories.length > 1) {
+    for (const cat of ['All', ...categories]) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.dataset.category = cat; b.textContent = cat;
+      const n = cat === 'All' ? images.length : images.filter(i => i.category === cat).length;
+      b.insertAdjacentHTML('beforeend', '<small>' + n + '</small>');
+      b.onclick = () => pick(cat);
+      $('filters').append(b);
+    }
+    const fromHash = decodeURIComponent(location.hash.slice(1));
+    pick(categories.includes(fromHash) ? fromHash : 'All');
   }
   for (const f of texts) {
     const li = document.createElement('li'), a = document.createElement('a');
