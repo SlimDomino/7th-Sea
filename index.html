@@ -3,9 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blood & Iron</title>
+<title>Blood &amp; Iron - a 7th Sea Adventure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
 <style>
-  h1, p.sub { text-align:center; }
+  /* ---- Header ---- */
+  header.title { text-align:center; margin:8px 0 6px; }
+  .presents { font:italic 600 22px 'Cormorant Garamond', Georgia, serif; color:#3b2f22; margin:0; }
+  h1.logo { margin:2px 0 0; line-height:1.15; font-weight:normal; }
+  /* Blood and Iron are sized so their capital letters are the same height. Both slanted (italic). */
+  .logo .blood, .logo .amp, .logo .iron { font-style:italic; display:inline-block; }
+  .logo .blood { font-family:'Nosifer', Impact, sans-serif; font-size:64px; padding-right:6px; color:#8b0000; letter-spacing:1px; text-shadow:0 2px 0 #3a0000; }
+  .logo .amp { font-family:'Cinzel Decorative', Georgia, serif; font-weight:700; font-size:44px; color:#3b2f22; margin:0 10px; }
+  .logo .iron { font-family:'Cinzel Decorative', Georgia, serif; font-weight:900; font-size:52px; letter-spacing:2px; padding-right:6px;
+    background:linear-gradient(180deg,#eef1f3 0%,#9aa3ab 42%,#4a5056 55%,#c3c9ce 100%);
+    -webkit-background-clip:text; background-clip:text; color:#5a6168; -webkit-text-fill-color:transparent; -webkit-text-stroke:1px #2b2f33; }
+  .tagline { display:block; font:italic 700 28px 'Cormorant Garamond', Georgia, serif; color:#3b2f22; margin-top:4px; }
+  @media (max-width:600px) { .logo .blood { font-size:31px; padding-right:3px; } .logo .amp { font-size:22px; margin:0 4px; } .logo .iron { font-size:25px; letter-spacing:1px; padding-right:3px; } .tagline { margin-top:2px; font-size:21px; } .presents { font-size:17px; } }
+  /* ---- Two big section buttons ---- */
+  .hub { display:grid; grid-template-columns:repeat(2, minmax(0, 300px)); justify-content:center; gap:18px; margin:30px 0 8px; }
+  .hub button { position:relative; height:190px; border:2px solid #5a1616; border-radius:12px; overflow:hidden; cursor:pointer; padding:0;
+    font:700 23px 'Cormorant Garamond', Georgia, serif; color:#fff; box-shadow:0 3px 10px rgba(0,0,0,.25); transition:transform .12s, box-shadow .12s; }
+  .hub button:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.3); }
+  .hub button[aria-pressed="true"] { outline:4px solid #c9a227; outline-offset:2px; }
+  .hub .label { position:absolute; left:0; right:0; bottom:0; padding:10px 8px; background:rgba(40,8,8,.78); }
+  .hub .pics { background:url("images/7th-sea-map-combined.gif") center / cover; }
+  .hub .files { background:url("assets/emilios-study.jpeg") center 35% / cover; }
+  .hub .files { text-align:left; }
+  .hub .peek { position:absolute; top:10px; left:10px; right:10px; list-style:none; margin:0; padding:8px 12px; border-radius:8px; background:rgba(28,14,6,.72); font:14px/1.45 system-ui, sans-serif; color:#fbeed0; }
+  .hub .peek li { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .hub .peek li::before { content:''; display:inline-block; width:11px; height:13px; margin-right:7px; vertical-align:-1px; border-radius:2px;
+    background:linear-gradient(135deg,#fbeed0 0 70%, #d9b56a 70%); }
+  .hub .peek li.more { color:#e6cf9a; font-style:italic; }
+  .hub .peek li.more::before { display:none; }
+  .hub .label svg { width:22px; height:22px; vertical-align:-4px; margin-right:6px; }
+  @media (max-width:600px) { .hub { grid-template-columns:1fr 1fr; gap:10px; } .hub button { height:130px; font-size:17px; } .hub .peek { font-size:12px; top:7px; left:7px; right:7px; padding:6px 8px; line-height:1.4; } }
+  section.panel { margin-top:10px; }
+  h2#recaps-h { text-align:center; }
   :root { --bg:#fff; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); }
   @media (prefers-color-scheme: dark) { :root { --bg:#16181d; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); } }
   /* Background picture: change the file name below. Overlay darkness is the 0.65 values. */
@@ -32,7 +67,7 @@
   .recap hr { border:0; border-top:1px solid #d8c9a8; margin:24px 0; }
   @media (max-width:600px) { .recap { padding:22px 18px 28px; font-size:16px; } .recap h1 { font-size:23px; } }
   /* Session recap buttons at the top of the page */
-  .recaps { display:flex; flex-wrap:wrap; gap:10px; }
+  .recaps { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
   .recaps button { font:inherit; font-size:15px; padding:10px 16px; border-radius:8px; border:1px solid #7a1f1f; background:var(--card); color:var(--fg); cursor:pointer; text-align:left; }
   .recaps button:hover { background:#7a1f1f; color:#fff; }
   .recaps button b { color:#7a1f1f; margin-right:2px; }
@@ -63,19 +98,32 @@
 </style>
 </head>
 <body>
-<h1>Blood & Iron</h1>
-<p class="sub">Real People Gaming presents 7th Sea</p>
+<header class="title">
+  <p class="presents">Real People Gaming presents:</p>
+  <h1 class="logo"><span class="blood">Blood</span><span class="amp">&amp;</span><span class="iron">Iron</span>
+    <span class="tagline">a 7th Sea Adventure</span></h1>
+</header>
 <h2 id="recaps-h">Session Recaps</h2>
 <div class="recaps" id="recaps"></div>
-<h2 id="images-h">Pictures</h2>
+<nav class="hub" aria-label="Sections">
+  <button type="button" class="pics" data-panel="pictures" aria-pressed="false"><span class="label">Pictures &amp; Maps</span></button>
+  <button type="button" class="files" data-panel="files" aria-pressed="false">
+    <ul class="peek" id="peek" aria-hidden="true"></ul>
+    <span class="label"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 14a4 4 0 0 1 4-4h14l6 6h24a4 4 0 0 1 4 4v4H6z" fill="#e0b85a"/><path d="M4 24h56l-4 28a4 4 0 0 1-4 3H10a4 4 0 0 1-4-3z" fill="#f2cf73"/></svg>All Files</span></button>
+</nav>
+<section class="panel" id="pictures" hidden>
+<h2 id="images-h">Pictures &amp; Maps</h2>
 <div class="filters" id="filters" role="group" aria-label="Picture categories"></div>
 <div class="grid" id="images"></div>
+</section>
+<section class="panel" id="files" hidden>
 <h2 id="texts-h">Text files</h2>
 <ul id="texts"></ul>
 <h2 id="pdfs-h">PDFs</h2>
 <ul id="pdfs"></ul>
 <h2 id="docs-h">Documents</h2>
 <ul id="docs"></ul>
+</section>
 <dialog id="viewer"><button onclick="viewer.close()" aria-label="Close">✕</button><div id="content"></div></dialog>
 <script>
 const $ = id => document.getElementById(id);
@@ -181,7 +229,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
   const pick = cat => {
     for (const b of $('filters').children) b.setAttribute('aria-pressed', b.dataset.category === cat);
     for (const a of $('images').children) a.hidden = cat !== 'All' && a.dataset.category !== cat;
-    history.replaceState(null, '', cat === 'All' ? location.pathname + location.search : '#' + encodeURIComponent(cat));
+    if (!$('pictures').hidden) history.replaceState(null, '', '#' + (cat === 'All' ? 'pictures' : encodeURIComponent(cat)));
   };
   if (categories.length > 1) {
     for (const cat of ['All', ...categories]) {
@@ -195,6 +243,19 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     const fromHash = decodeURIComponent(location.hash.slice(1));
     pick(categories.includes(fromHash) ? fromHash : 'All');
   }
+  // The two big buttons: show Pictures & Maps or All Files (click again to hide).
+  const openPanel = (name, scroll) => {
+    for (const b of document.querySelectorAll('.hub button')) b.setAttribute('aria-pressed', b.dataset.panel === name);
+    $('pictures').hidden = name !== 'pictures'; $('files').hidden = name !== 'files';
+    if (name === 'pictures') { const on = [...$('filters').children].find(b => b.getAttribute('aria-pressed') === 'true'); pick(on ? on.dataset.category : 'All'); }
+    else history.replaceState(null, '', name ? '#' + name : location.pathname + location.search);
+    if (name && scroll) $(name).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  for (const b of document.querySelectorAll('.hub button'))
+    b.onclick = () => openPanel(b.getAttribute('aria-pressed') === 'true' ? null : b.dataset.panel, true);
+  const startHash = decodeURIComponent(location.hash.slice(1));
+  if (startHash === 'files') openPanel('files');
+  else if (startHash === 'pictures' || categories.includes(startHash)) openPanel('pictures');
   const openText = async href => {
     const pre = document.createElement('pre'); current = -1;
     pre.textContent = await (await fetch(href)).text();
@@ -236,6 +297,25 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     a.href = f.split('/').map(encodeURIComponent).join('/'); a.textContent = f.split('/').pop(); a.download = '';
     li.append(a); $('docs').append(li);
   }
+  // Preview list on the All Files button: as many file names as fit, then "+ N more".
+  const allFiles = [...texts.filter(f => !SESSION.test(f)), ...pdfs, ...docs.map(f => f.split('/').pop())]
+    .map(f => f.replace(/\.[^.]+$/, ''));
+  const fitPeek = () => {
+    const ul = $('peek'), room = ul.parentElement.clientHeight - ul.parentElement.querySelector('.label').offsetHeight - 20;
+    ul.replaceChildren();
+    for (let i = 0; i < allFiles.length; i++) {
+      const li = document.createElement('li'); li.textContent = allFiles[i]; ul.append(li);
+      if (ul.offsetHeight > room) {
+        li.remove();
+        if (ul.lastChild) ul.lastChild.remove();
+        const more = document.createElement('li'); more.className = 'more';
+        more.textContent = '+ ' + (allFiles.length - ul.children.length) + ' more'; ul.append(more);
+        break;
+      }
+    }
+  };
+  fitPeek(); addEventListener('resize', fitPeek);
+  document.fonts.ready.then(fitPeek);
   for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h'], ['docs', 'docs-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
