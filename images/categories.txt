@@ -43,6 +43,7 @@ Seventh Sea.png = Seventh Sea
 Jennys.jpeg = The Jennys
 Gomez.png = Gomez
 Esme.jpeg = Esme Eriksdottir
+Esme's Compass.jpeg = Esme's Compass
 
 [Other NPCs]
 Defender of the Faith.png = Defender of the Faith
