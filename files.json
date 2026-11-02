@@ -90,6 +90,21 @@
       "category": "NachtKarneval Crew"
     },
     {
+      "src": "images/Upper Deck@2x.png",
+      "title": "Deck Plan: Upper Deck",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Gun Deck & Cabins@2x.png",
+      "title": "Deck Plan: Gun Deck & Cabins",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Cargo Hold@2x.png",
+      "title": "Deck Plan: Cargo Hold",
+      "category": "NachtKarneval Crew"
+    },
+    {
       "src": "images/3 Quarter Mate Rodney.png",
       "title": "Rodney, Three Quarter Mate",
       "category": "NachtKarneval Crew"
@@ -112,6 +127,11 @@
     {
       "src": "images/Seventh Sea.png",
       "title": "Seventh Sea",
+      "category": "NachtKarneval Crew"
+    },
+    {
+      "src": "images/Jennys.jpeg",
+      "title": "The Jennys",
       "category": "NachtKarneval Crew"
     },
     {
