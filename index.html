@@ -17,6 +17,26 @@
   .grid a { background:var(--card); border-radius:8px; overflow:hidden; text-decoration:none; color:inherit; }
   .grid img { width:100%; height:180px; object-fit:cover; display:block; }
   .grid span { display:block; padding:6px 8px; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  /* Recap reading view (markdown rendered as a page) */
+  .recap { max-width:72ch; max-height:85vh; overflow:auto; padding:28px 32px 36px; font:17px/1.65 Georgia, 'Times New Roman', serif; color:#1d1a16; background:#fbf7ee; }
+  .recap h1 { text-align:left; font-size:28px; line-height:1.2; margin:0 40px 12px 0; color:#7a1f1f; }
+  .recap h2 { font-size:21px; margin:30px 0 8px; padding-bottom:4px; border-bottom:1px solid #d8c9a8; color:#5a1616; }
+  .recap h3 { font-size:18px; margin:22px 0 6px; }
+  .recap p { margin:0 0 14px; }
+  .recap ul, .recap ol { margin:0 0 14px; padding-left:24px; }
+  .recap li { margin-bottom:6px; }
+  .recap .meta { font:14px/1.6 system-ui, sans-serif; color:#5b5246; margin-bottom:18px; }
+  .recap .meta b { color:#3a332a; }
+  .recap .label { font:600 13px/1 system-ui, sans-serif; letter-spacing:.06em; text-transform:uppercase; color:#7a1f1f; margin:18px 0 8px; }
+  .recap blockquote { margin:0 0 14px; padding-left:14px; border-left:3px solid #d8c9a8; font-style:italic; }
+  .recap hr { border:0; border-top:1px solid #d8c9a8; margin:24px 0; }
+  @media (max-width:600px) { .recap { padding:22px 18px 28px; font-size:16px; } .recap h1 { font-size:23px; } }
+  /* Session recap buttons at the top of the page */
+  .recaps { display:flex; flex-wrap:wrap; gap:10px; }
+  .recaps button { font:inherit; font-size:15px; padding:10px 16px; border-radius:8px; border:1px solid #7a1f1f; background:var(--card); color:var(--fg); cursor:pointer; text-align:left; }
+  .recaps button:hover { background:#7a1f1f; color:#fff; }
+  .recaps button b { color:#7a1f1f; margin-right:2px; }
+  .recaps button:hover b { color:#fff; }
   .filters { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
   .filters button { font:inherit; font-size:14px; padding:6px 14px; border-radius:999px; border:1px solid #8a6d3b; background:var(--card); color:var(--fg); cursor:pointer; }
   .filters button:hover { background:#fff; }
@@ -45,6 +65,8 @@
 <body>
 <h1>Blood & Iron</h1>
 <p class="sub">Real People Gaming presents 7th Sea</p>
+<h2 id="recaps-h">Session Recaps</h2>
+<div class="recaps" id="recaps"></div>
 <h2 id="images-h">Pictures</h2>
 <div class="filters" id="filters" role="group" aria-label="Picture categories"></div>
 <div class="grid" id="images"></div>
@@ -59,6 +81,43 @@
 const $ = id => document.getElementById(id);
 const url = (dir, f) => dir + '/' + encodeURIComponent(f);
 const name = f => f.replace(/\.[^.]+$/, '');
+// Small markdown renderer for session recaps: headings, **bold**, *italic*,
+// lists, quotes and rules. The "Played / In-game / Place" lines become a small
+// header block, and character names in the Cast list are bolded.
+function renderRecap(md) {
+  const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const inline = t => esc(t)
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+    .replace(/(^|[^*])\*(?!\s)(.+?)\*(?!\*)/g, '$1<i>$2</i>');
+  const lines = md.replace(/\r/g, '').split('\n');
+  let html = '', list = null, para = [], meta = [], section = '';
+  const flushPara = () => { if (para.length) html += '<p>' + inline(para.join(' ')) + '</p>'; para = []; };
+  const flushList = () => { if (list) html += '</' + list + '>'; list = null; };
+  const flushMeta = () => { if (meta.length) html += '<div class="meta">' + meta.join('<br>') + '</div>'; meta = []; };
+  const flush = () => { flushPara(); flushList(); flushMeta(); };
+  for (const raw of lines) {
+    const line = raw.trimEnd(), t = line.trim();
+    let m;
+    if (!t) { flush(); continue; }
+    if ((m = t.match(/^(#{1,3})\s+(.*)$/))) { flush(); const n = m[1].length; section = m[2]; html += '<h' + n + '>' + inline(m[2]) + '</h' + n + '>'; continue; }
+    if (/^(-{3,}|\*{3,})$/.test(t)) { flush(); html += '<hr>'; continue; }
+    if ((m = t.match(/^(Played|In-game|Place|Date|Location):\s*(.*)$/i))) { flushPara(); flushList(); meta.push('<b>' + esc(m[1]) + ':</b> ' + inline(m[2])); continue; }
+    if (/^(Cast|Players)$/i.test(t)) { flush(); section = 'Cast'; html += '<div class="label">' + esc(t) + '</div>'; continue; }
+    if ((m = t.match(/^[-*]\s+(.*)$/)) || (m = t.match(/^\d+\.\s+(.*)$/))) {
+      flushPara(); flushMeta();
+      const kind = /^\d/.test(t) ? 'ol' : 'ul';
+      if (list !== kind) { flushList(); html += '<' + kind + '>'; list = kind; }
+      let item = inline(m[1]);
+      // Cast list: bold the character's name (everything before the " – Player" part).
+      if (section === 'Cast') item = item.replace(/^(.+?)(\s[–—-]\s)/, '<b>$1</b>$2');
+      html += '<li>' + item + '</li>'; continue;
+    }
+    if ((m = t.match(/^>\s?(.*)$/))) { flush(); html += '<blockquote>' + inline(m[1]) + '</blockquote>'; continue; }
+    flushList(); flushMeta(); para.push(t);
+  }
+  flush();
+  return html;
+}
 function show(node) { $('content').replaceChildren(node); if (!$('viewer').open) $('viewer').showModal(); }
 
 // Picture viewer with back/forward arrows. Cycles through the pictures currently
@@ -136,15 +195,35 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     const fromHash = decodeURIComponent(location.hash.slice(1));
     pick(categories.includes(fromHash) ? fromHash : 'All');
   }
-  for (const f of texts) {
+  const openText = async href => {
+    const pre = document.createElement('pre'); current = -1;
+    pre.textContent = await (await fetch(href)).text();
+    show(pre);
+  };
+  const openRecap = async href => {
+    current = -1;
+    const art = document.createElement('article');
+    art.className = 'recap';
+    art.innerHTML = renderRecap(await (await fetch(href)).text());
+    show(art); art.scrollTop = 0;
+  };
+  // Session recaps ("Session 03 – The Pattern and the Padre.md") become buttons
+  // at the top: "S3 - The Pattern & the Padre". Everything else stays under Text files.
+  const SESSION = /^Session\s+0*(\d+)\s*[–—-]\s*(.+)\.(md|txt)$/i;
+  const recaps = texts.filter(f => SESSION.test(f))
+    .map(f => { const [, n, title] = f.match(SESSION); return { f, n: +n, title: title.replace(/ and /gi, ' & ') }; })
+    .sort((a, b) => a.n - b.n);
+  for (const r of recaps) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.innerHTML = '<b></b> ';
+    b.firstChild.textContent = 'S' + r.n; b.append('- ' + r.title);
+    b.title = r.f; b.onclick = () => openRecap(url('texts', r.f));
+    $('recaps').append(b);
+  }
+  for (const f of texts.filter(f => !SESSION.test(f))) {
     const li = document.createElement('li'), a = document.createElement('a');
     a.href = url('texts', f); a.textContent = f;
-    a.onclick = async e => {
-      e.preventDefault();
-      const pre = document.createElement('pre'); current = -1;
-      pre.textContent = await (await fetch(a.href)).text();
-      show(pre);
-    };
+    a.onclick = e => { e.preventDefault(); openText(a.href); };
     li.append(a); $('texts').append(li);
   }
   for (const f of pdfs) {
@@ -157,7 +236,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     a.href = f.split('/').map(encodeURIComponent).join('/'); a.textContent = f.split('/').pop(); a.download = '';
     li.append(a); $('docs').append(li);
   }
-  for (const [list, heading] of [['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h'], ['docs', 'docs-h']])
+  for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['texts', 'texts-h'], ['pdfs', 'pdfs-h'], ['docs', 'docs-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
 </script>
