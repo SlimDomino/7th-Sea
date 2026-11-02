@@ -32,11 +32,15 @@ Maria Jose party dress.png = María José (party dress)
 
 [NachtKarneval Crew]
 Nachtkarneval.jpg = The NachtKarneval
+Upper Deck@2x.png = Deck Plan: Upper Deck
+Gun Deck & Cabins@2x.png = Deck Plan: Gun Deck & Cabins
+Cargo Hold@2x.png = Deck Plan: Cargo Hold
 3 Quarter Mate Rodney.png = Rodney, Three Quarter Mate
 Half Mate Benoit Balls.jfif = Benoît du Charmont, Half Mate
 Captain Pickles.png = Captain Pickles, Master Gunner
 The Padre.jpeg = Padre Bart, Chaplain
 Seventh Sea.png = Seventh Sea
+Jennys.jpeg = The Jennys
 Gomez.png = Gomez
 Esme.jpeg = Esme Eriksdottir
 
