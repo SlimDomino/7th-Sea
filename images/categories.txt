@@ -1,0 +1,47 @@
+# PICTURE CATEGORIES for the website.
+#
+# How it works:
+#   - A line in [square brackets] starts a category. Categories show on the
+#     site in the order they appear here.
+#   - Under it, list picture file names (exactly as they are in the images
+#     folder), one per line.
+#   - To show a different name under a picture, add " = Display Name".
+#   - Any picture not listed here shows up under "Other".
+#   - You can also put pictures in a subfolder of images (for example
+#     images/Places & Maps/) and they go in that category automatically.
+#   - Lines starting with # are notes and are ignored.
+
+[Torres y Soldano Family]
+Emilio Torres.jpg = Don Emilio Torres
+Isabel Soldano y Torres.jpeg = Doña Isabel Soldano de Torres
+Isabel Soldano y Torres.jpg = Doña Isabel Soldano de Torres (2)
+Emilito.jfif = Emilito
+Juan.jpg = Juan
+Hern.png = Hernando
+Juanita Torres.png = Juanita
+Ana Soldano y Torres.jpg = Ana
+Cristobal.jpg = Cristóbal
+Tomas.png = Tío Tomás
+
+[Player Characters]
+Maria Jose.jpg = María José
+Maria Jose party dress.png = María José (party dress)
+Lute's party dress.png = Captain Lute (party dress)
+
+[Other NPCs]
+Defender of the Faith.png = Defender of the Faith
+Red Cap.png = Red Cap
+
+[Places & Maps]
+7th-sea-map-combined.gif = Map of Théah
+Altamira.png = Altamira
+ChatGPT Image Oct 4, 2026, 04_41_14 PM.png = Hacienda de los Robles
+Heilgrundstat.jpg = Heilgrundstat
+
+[Battle Maps & Scenes]
+Dockside.jpeg = Dockside Warehouse
+
+[Items & Artifacts]
+Jewel of Judgement.jpeg = Jewel of Judgement
+
+# Not sorted yet (shows under Other): Seventh Sea.png
