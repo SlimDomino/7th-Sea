@@ -31,7 +31,13 @@ Maria Jose.jpg = María José
 Maria Jose party dress.png = María José (party dress)
 
 [NachtKarneval Crew]
+Nachtkarneval.jpg = The NachtKarneval
+3 Quarter Mate Rodney.png = Rodney, Three Quarter Mate
+Half Mate Benoit Balls.jfif = Benoît du Charmont, Half Mate
+Captain Pickles.png = Captain Pickles, Master Gunner
+The Padre.jpeg = Padre Bart, Chaplain
 Seventh Sea.png = Seventh Sea
+Gomez.png = Gomez
 
 [Other NPCs]
 Defender of the Faith.png = Defender of the Faith
