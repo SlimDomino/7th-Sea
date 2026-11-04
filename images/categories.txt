@@ -60,7 +60,7 @@ Dockside.jpeg = Dockside Warehouse
 
 [Items & Artifacts]
 Jewel of Judgement.jpeg = Jewel of Judgement
-The Pattern.jpg = The Pattern
 
 [Dreams]
+The Pattern.jpg = The Pattern
 Trollskull Manor.png = Trollskull Manor
