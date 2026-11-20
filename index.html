@@ -104,6 +104,10 @@
   dialog .nav:hover { background:rgba(0,0,0,.7); }
   dialog .nav.prev { left:6px; } dialog .nav.next { left:auto; right:6px; }
   dialog .nav[hidden] { display:none; }
+  /* Recap and broadsheet reader: same arrows, at the sides of the page */
+  .reader { position:relative; }
+  .reader.paged .recap { padding-left:62px; padding-right:62px; }
+  @media (max-width:600px) { .reader.paged .recap { padding-left:40px; padding-right:40px; } .reader .nav { width:30px; height:52px; font-size:24px; } .reader .nav.prev { left:4px; } .reader .nav.next { right:4px; } }
 </style>
 </head>
 <body>
@@ -177,9 +181,10 @@ function show(node) { $('content').replaceChildren(node); if (!$('viewer').open)
 // Picture viewer with back/forward arrows. Cycles through the pictures currently
 // shown in the grid (so it respects the category filter). Arrow keys and
 // swiping on a phone work too.
-let gallery = [], current = -1;
+let gallery = [], current = -1, pager = null;
 function showPhoto(i) {
   if (!gallery.length) return;
+  pager = null;
   current = (i + gallery.length) % gallery.length;
   const a = gallery[current];
   const fig = document.createElement('figure');
@@ -199,23 +204,57 @@ function showPhoto(i) {
   // Preload the neighbours so flipping is quick.
   for (const j of [current - 1, current + 1]) new Image().src = gallery[(j + gallery.length) % gallery.length].href;
 }
+// Recap / broadsheet reader with the same back/forward arrows, paging through
+// the list that was clicked (Session Recaps or Altamira Broadsheets), wrapping round.
+async function showDoc(i) {
+  const n = pager.list.length;
+  pager.i = (i + n) % n;
+  const r = pager.list[pager.i], token = pager;
+  const text = await (await fetch(url('texts', r.f))).text();
+  if (pager !== token || pager.list[pager.i] !== r) return; // a newer page was asked for meanwhile
+  const wrap = document.createElement('div');
+  wrap.className = n > 1 ? 'reader paged' : 'reader';
+  const art = document.createElement('article');
+  art.className = pager.extra ? 'recap ' + pager.extra : 'recap';
+  art.innerHTML = renderRecap(text);
+  wrap.append(art);
+  if (n > 1) {
+    const prev = document.createElement('button'), next = document.createElement('button');
+    prev.className = 'nav prev'; prev.innerHTML = '&#8249;'; prev.setAttribute('aria-label', 'Previous');
+    next.className = 'nav next'; next.innerHTML = '&#8250;'; next.setAttribute('aria-label', 'Next');
+    prev.title = 'S' + pager.list[(pager.i - 1 + n) % n].n + ' - ' + pager.list[(pager.i - 1 + n) % n].title;
+    next.title = 'S' + pager.list[(pager.i + 1) % n].n + ' - ' + pager.list[(pager.i + 1) % n].title;
+    prev.onclick = e => { e.stopPropagation(); showDoc(pager.i - 1); };
+    next.onclick = e => { e.stopPropagation(); showDoc(pager.i + 1); };
+    wrap.append(prev, next);
+  }
+  show(wrap); art.scrollTop = 0;
+}
 function openPhoto(a) {
   gallery = [...$('images').children].filter(x => !x.hidden);
   showPhoto(gallery.indexOf(a));
 }
 document.addEventListener('keydown', e => {
+  if ($('viewer').open && pager && pager.list.length > 1) {
+    if (e.key === 'ArrowLeft') showDoc(pager.i - 1);
+    if (e.key === 'ArrowRight') showDoc(pager.i + 1);
+    return;
+  }
   if (!$('viewer').open || current < 0) return;
   if (e.key === 'ArrowLeft') showPhoto(current - 1);
   if (e.key === 'ArrowRight') showPhoto(current + 1);
 });
-let touchX = null;
-$('viewer').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+let touchX = null, touchY = null;
+$('viewer').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, { passive: true });
 $('viewer').addEventListener('touchend', e => {
-  if (touchX === null || current < 0) return;
-  const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY; touchX = null;
+  // Recaps and broadsheets: a clearly sideways swipe turns the page (scrolling up and down doesn't).
+  if (pager && pager.list.length > 1) { if (Math.abs(dx) > 60 && Math.abs(dx) > 2 * Math.abs(dy)) showDoc(pager.i + (dx < 0 ? 1 : -1)); return; }
+  if (current < 0) return;
   if (Math.abs(dx) > 50) showPhoto(current + (dx < 0 ? 1 : -1));
 });
-$('viewer').addEventListener('close', () => { current = -1; });
+$('viewer').addEventListener('close', () => { current = -1; pager = null; });
 $('viewer').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
 fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, categories, texts, pdfs = [], docs = [] }) => {
@@ -263,17 +302,11 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
   if (startHash === 'files') openPanel('files');
   else if (startHash === 'pictures' || categories.includes(startHash)) openPanel('pictures');
   const openText = async href => {
-    const pre = document.createElement('pre'); current = -1;
+    const pre = document.createElement('pre'); current = -1; pager = null;
     pre.textContent = await (await fetch(href)).text();
     show(pre);
   };
-  const openRecap = async (href, extra) => {
-    current = -1;
-    const art = document.createElement('article');
-    art.className = extra ? 'recap ' + extra : 'recap';
-    art.innerHTML = renderRecap(await (await fetch(href)).text());
-    show(art); art.scrollTop = 0;
-  };
+  const openRecap = (list, i, extra) => { current = -1; pager = { list, i, extra }; showDoc(i); };
   // Session recaps ("Session 03 – The Pattern and the Padre.md") become buttons
   // at the top: "S3 - The Pattern & the Padre". Everything else stays under Text files.
   const SESSION = /^Session\s+0*(\d+)\s*[–—-]\s*(.+)\.(md|txt)$/i;
@@ -284,7 +317,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     const b = document.createElement('button');
     b.type = 'button'; b.innerHTML = '<b></b> ';
     b.firstChild.textContent = 'S' + r.n; b.append('- ' + r.title);
-    b.title = r.f; b.onclick = () => openRecap(url('texts', r.f));
+    b.title = r.f; b.onclick = () => openRecap(recaps, recaps.indexOf(r));
     $('recaps').append(b);
   }
   // Altamira Broadsheets ("Broadsheet 02 – Fireworks over Altamira.md"): the
@@ -297,7 +330,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     const b = document.createElement('button');
     b.type = 'button'; b.innerHTML = '<b></b> ';
     b.firstChild.textContent = 'S' + r.n; b.append('- ' + r.title);
-    b.title = r.f; b.onclick = () => openRecap(url('texts', r.f), 'news');
+    b.title = r.f; b.onclick = () => openRecap(sheets, sheets.indexOf(r), 'news');
     $('news').append(b);
   }
   // All Files: one A-to-Z list of every text file, PDF and document (not the recaps),
