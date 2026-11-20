@@ -6,7 +6,7 @@
 <title>Blood &amp; Iron - a 7th Sea Adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <style>
   /* ---- Header ---- */
   header.title { text-align:center; margin:8px 0 6px; }
@@ -39,7 +39,7 @@
   .filelist a { display:block; padding:11px 16px; text-decoration:none; font-size:16px; }
   .filelist a:hover { background:#7a1f1f; color:#fff; }
   #files-h { text-align:center; }
-  h2#recaps-h { text-align:center; }
+  h2#recaps-h, h2#news-h { text-align:center; }
   :root { --bg:#fff; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); }
   @media (prefers-color-scheme: dark) { :root { --bg:#16181d; --fg:#000; --muted:#333; --card:rgba(255,255,255,.75); } }
   /* Background picture: change the file name below. Overlay darkness is the 0.65 values. */
@@ -65,6 +65,16 @@
   .recap blockquote { margin:0 0 14px; padding-left:14px; border-left:3px solid #d8c9a8; font-style:italic; }
   .recap hr { border:0; border-top:1px solid #d8c9a8; margin:24px 0; }
   @media (max-width:600px) { .recap { padding:22px 18px 28px; font-size:16px; } .recap h1 { font-size:23px; } }
+  /* Altamira Broadsheets reading view: newsprint, blackletter mastheads */
+  .recap.news { background:#f1ecdc; }
+  .recap.news h1 { text-align:center; margin:0 0 12px; font-size:24px; color:#1d1a16; }
+  .recap.news .meta { text-align:center; font-style:italic; }
+  .recap.news h2 { font:400 34px/1.15 'UnifrakturMaguntia', 'Old English Text MT', Georgia, serif; text-align:center; color:#111; margin:34px 0 4px; padding:10px 0 6px; border-top:3px double #1d1a16; border-bottom:1px solid #1d1a16; }
+  .recap.news h2 + p { text-align:center; font-size:14px; letter-spacing:.04em; margin-bottom:18px; }
+  .recap.news h3 { text-align:center; text-transform:uppercase; letter-spacing:.03em; font-size:20px; margin:18px 0 6px; color:#111; }
+  .recap.news h3 + p { text-align:center; }
+  .recap.news blockquote { text-align:center; border:0; color:#5b5246; padding:0 20px; }
+  @media (max-width:600px) { .recap.news h2 { font-size:27px; } }
   /* Session recap buttons at the top of the page */
   .recaps { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
   .recaps button { font:inherit; font-size:15px; padding:10px 16px; border-radius:8px; border:1px solid #7a1f1f; background:var(--card); color:var(--fg); cursor:pointer; text-align:left; }
@@ -104,6 +114,8 @@
 </header>
 <h2 id="recaps-h">Session Recaps</h2>
 <div class="recaps" id="recaps"></div>
+<h2 id="news-h">The Altamira Broadsheets</h2>
+<div class="recaps" id="news"></div>
 <nav class="hub" aria-label="Sections">
   <button type="button" class="pics" data-panel="pictures" aria-pressed="false"><span class="label">Pictures &amp; Maps</span></button>
   <button type="button" class="files" data-panel="files" aria-pressed="false">
@@ -255,10 +267,10 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     pre.textContent = await (await fetch(href)).text();
     show(pre);
   };
-  const openRecap = async href => {
+  const openRecap = async (href, extra) => {
     current = -1;
     const art = document.createElement('article');
-    art.className = 'recap';
+    art.className = extra ? 'recap ' + extra : 'recap';
     art.innerHTML = renderRecap(await (await fetch(href)).text());
     show(art); art.scrollTop = 0;
   };
@@ -275,11 +287,24 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     b.title = r.f; b.onclick = () => openRecap(url('texts', r.f));
     $('recaps').append(b);
   }
+  // Altamira Broadsheets ("Broadsheet 02 – Fireworks over Altamira.md"): the
+  // newspapers' version of each session, as buttons in the same style.
+  const BROADSHEET = /^Broadsheet\s+0*(\d+)\s*[–—-]\s*(.+)\.(md|txt)$/i;
+  const sheets = texts.filter(f => BROADSHEET.test(f))
+    .map(f => { const [, n, title] = f.match(BROADSHEET); return { f, n: +n, title: title.replace(/ and /gi, ' & ') }; })
+    .sort((a, b) => a.n - b.n);
+  for (const r of sheets) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.innerHTML = '<b></b> ';
+    b.firstChild.textContent = 'S' + r.n; b.append('- ' + r.title);
+    b.title = r.f; b.onclick = () => openRecap(url('texts', r.f), 'news');
+    $('news').append(b);
+  }
   // All Files: one A-to-Z list of every text file, PDF and document (not the recaps),
   // shown without the .txt/.pdf ending. Text files open in the viewer, PDFs in a new
   // tab, Word-type documents download.
   const fileEntries = [
-    ...texts.filter(f => !SESSION.test(f)).map(f => ({ name: f, href: url('texts', f), kind: 'text' })),
+    ...texts.filter(f => !SESSION.test(f) && !BROADSHEET.test(f)).map(f => ({ name: f, href: url('texts', f), kind: 'text' })),
     ...pdfs.map(f => ({ name: f, href: url('pdfs', f), kind: 'pdf' })),
     ...docs.map(f => ({ name: f.split('/').pop(), href: f.split('/').map(encodeURIComponent).join('/'), kind: 'doc' })),
   ].map(e => ({ ...e, title: e.name.replace(/\.[^.]+$/, '') }))
@@ -292,7 +317,7 @@ fetch('files.json', { cache: 'no-cache' }).then(r => r.json()).then(({ images, c
     else a.download = '';
     li.append(a); $('filelist').append(li);
   }
-  for (const [list, heading] of [['recaps', 'recaps-h'], ['images', 'images-h'], ['filelist', 'files-h']])
+  for (const [list, heading] of [['recaps', 'recaps-h'], ['news', 'news-h'], ['images', 'images-h'], ['filelist', 'files-h']])
     if (!$(list).children.length) $(heading).hidden = true;
 }).catch(() => { document.body.insertAdjacentHTML('beforeend', '<p>Could not load files.json — run <code>node build.js</code>.</p>'); });
 </script>

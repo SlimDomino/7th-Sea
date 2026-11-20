@@ -1,0 +1,59 @@
+# The Altamira Broadsheets – No. 2: Fireworks over Altamira
+
+Date: printed Julius 7, 1669, after the first night of Los Borrachos
+Location: sold in the plazas of Altamira for a centimo. Believe at your own risk.
+
+
+## La Gaceta de Altamira
+
+*Licensed by the Holy Church*
+
+### MARTYRDOM IN THE WAREHOUSE QUARTER
+
+**Faithful Servants of the Holy Office Set Upon by Foreign Brigands on the Blessed First Night of Los Borrachos**
+
+On the evening of the sixth of Julius, as the good people of Altamira gave thanks with fireworks and song, a company of the Holy Office's faithful brothers, engaged in their customary and peaceable patrol of the warehouse quarter, was set upon without provocation by a band of heretical cutthroats.
+
+The ringleader, by the testimony of several brothers who survived the assault, was an Eisen of monstrous size, a known follower of the Objectionist heresy, whose right hand has been replaced by an engine of iron in the manner of the godless northern barbarians. His accomplice, a man of dissolute habits who may be Castillian by birth but is certainly no Castillian in spirit, was seen to fly through the air from the rooftops "like a bat out of the Abyss."
+
+The brigands were joined in the attack by a mob of armed sailors from a vessel of the lowest character, which the Gaceta will not dignify by naming. The officer commanding the patrol was most grievously wounded and robbed of a sacred relic, a precious stone of great holiness entrusted to him by his superiors.
+
+The Holy Office assures the faithful that the guilty are known, that their descriptions have been recorded, and that justice is patient. Any person with knowledge of a tall Eisen with an iron hand is asked to present himself at the offices of the Holy Inquisition, where his discretion will be rewarded.
+
+With the licence of the Most Illustrious Bishop of Altamira.
+
+
+## El Pregonero
+
+*The Town Crier of Altamira*
+
+### THIRTY INQUISITORS SLAIN BY IRON-FISTED GIANT!!
+
+**Carnival of Thieves Drops Anchor in Our Harbor! Flying Man Seen Over Rooftops! Fireworks Were Cover for Massacre, Say Witnesses!**
+
+> *[Woodcut: an enormous bearded man, at least nine feet tall, holding a priest over his head with an iron claw, while a man with bat wings swoops overhead and a striped ship full of jugglers fires cannons in the background.]*
+
+ALTAMIRA REELS! As our fair city lifted its eyes to the fireworks on the first night of Los Borrachos, a horror was unfolding in the warehouse streets that this paper can only describe as A MASSACRE.
+
+Thirty of the Holy Office's bravest (some say forty) were cut down in under a minute by a giant from the frozen north, a man with a fist of black iron that, our eyewitness swears, "glowed red like a forge and tore through steel as if it were bread." He was assisted by a second villain who leapt from a rooftop, turned three somersaults in the air, and killed seven men before his boots touched the cobbles.
+
+THE CARNIVAL SHIP! Readers will have seen the vessel with the striped sails now moored at our docks, its decks crowded with acrobats, fire-eaters and a captain dressed as a clown. El Pregonero has learned that this "carnival" is nothing of the sort. When the slaughter began, its crew poured down the gangplank armed to the teeth, as if they had been waiting for the signal. A respected dockside merchant tells us, "My nephew says the whole crew are thieves, and my nephew would know."
+
+THE CURSED STONE! The wounded officer was robbed of a jewel which, our sources whisper, was RED AS BLOOD and WARM TO THE TOUCH. What could a foreign giant want with such a thing? El Pregonero does not speculate. El Pregonero merely asks.
+
+Mothers, keep your daughters indoors! Merchants, count your silver! And if you see a tall Eisen in black and gold, CROSS THE STREET!
+
+
+## La Lengua de Altamira
+
+*Society, Scandal and Whispers*
+
+### FROM BEHIND THE FAN
+
+**A Family Quarrel on the Old Bridge**
+
+Who were the two young gentlemen who stopped all traffic on the old stone bridge at dusk on the sixth, rolling about in the dirt among the wine barrels, weeping and shouting about "lies" and "brotherhood"? Our correspondent, who was three carts back, heard one accuse the other of having lied to him for years about being Castillian. A lovers' quarrel, say some. A gambling debt, say others. Your columnist notes only that one of the gentlemen bore a striking likeness to a certain prodigal son of a certain great house on the Las Robles road, lately returned from the sea for a funeral, and that his companion was very tall, very foreign, and very, very handsome.
+
+Meanwhile, the same evening, a certain young lady of that same great house, only days from her fifteenth birthday, was seen passing the bridge in deepest mourning on her way to call on a sea captain, accompanied by a widowed cousin nobody in Altamira society has ever heard of. A Doña Beatriz de Salcedo. Of the Salcedos of...? Your columnist confesses she cannot place the family. Can any reader?
+
+And what became of the drunken young cousin who rode with the quarreling gentlemen? A slip of a boy called "Rodrigo," so the bridge sergeant tells us, who was never seen again after the fireworks. Altamira wonders. Altamira always wonders.
